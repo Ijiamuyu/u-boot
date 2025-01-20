@@ -10,6 +10,7 @@
 #include <dm/device.h>
 #include <dm/uclass.h>
 #include <power/stpmic1.h>
+#include <asm/arch/stm32.h>
 
 #define STM32MP_OTP_BANK	0
 #define STM32MP_NVM_BANK	1

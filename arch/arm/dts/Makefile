@@ -1139,7 +1139,8 @@ dtb-$(CONFIG_STM32MP15X) += \
 	stm32mp157c-ed1-scmi.dtb \
 	stm32mp157c-ev1.dtb \
 	stm32mp157c-ev1-scmi.dtb \
-	stm32mp157c-odyssey.dtb
+	stm32mp157c-odyssey.dtb \
+	stm32mp157d-atk.dtb
 
 dtb-$(CONFIG_STM32MP25X) += \
 	stm32mp257f-ev1.dtb

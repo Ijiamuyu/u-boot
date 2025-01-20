@@ -1008,6 +1008,7 @@ static int treat_partition_list(struct stm32prog_data *data)
 		INIT_LIST_HEAD(&data->dev[j].part_list);
 	}
 
+	data->tee_detected = false;
 	data->fsbl_nor_detected = false;
 	for (i = 0; i < data->part_nb; i++) {
 		part = &data->part_array[i];
@@ -1016,8 +1017,8 @@ static int treat_partition_list(struct stm32prog_data *data)
 		/* skip partition with IP="none" */
 		if (part->target == STM32PROG_NONE) {
 			if (IS_SELECT(part)) {
-				stm32prog_err("Layout: selected none phase = 0x%x for part %s",
-					      part->id, part->name);
+				stm32prog_err("Layout: selected none phase = 0x%x",
+					      part->id);
 				return -EINVAL;
 			}
 			continue;
@@ -1025,14 +1026,14 @@ static int treat_partition_list(struct stm32prog_data *data)
 
 		if (part->id == PHASE_FLASHLAYOUT ||
 		    part->id > PHASE_LAST_USER) {
-			stm32prog_err("Layout: invalid phase = 0x%x for part %s",
-				      part->id, part->name);
+			stm32prog_err("Layout: invalid phase = 0x%x",
+				      part->id);
 			return -EINVAL;
 		}
 		for (j = i + 1; j < data->part_nb; j++) {
 			if (part->id == data->part_array[j].id) {
-				stm32prog_err("Layout: duplicated phase 0x%x for part %s and %s",
-					      part->id, part->name, data->part_array[j].name);
+				stm32prog_err("Layout: duplicated phase 0x%x at line %d and %d",
+					      part->id, i, j);
 				return -EINVAL;
 			}
 		}
@@ -1059,6 +1060,12 @@ static int treat_partition_list(struct stm32prog_data *data)
 			    !strncmp(part->name, "fsbl", 4))
 				data->fsbl_nor_detected = true;
 			/* fallthrough */
+		case STM32PROG_NAND:
+		case STM32PROG_SPI_NAND:
+			if (!data->tee_detected &&
+			    !strncmp(part->name, "tee", 3))
+				data->tee_detected = true;
+			break;
 		default:
 			break;
 		}

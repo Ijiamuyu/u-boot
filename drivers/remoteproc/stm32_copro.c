@@ -11,6 +11,7 @@
 #include <remoteproc.h>
 #include <reset.h>
 #include <asm/io.h>
+#include <asm/arch/stm32.h>
 #include <dm/device_compat.h>
 #include <linux/err.h>
 #include <linux/printk.h>

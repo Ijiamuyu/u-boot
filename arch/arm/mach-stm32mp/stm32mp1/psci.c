@@ -10,6 +10,7 @@
 #include <asm/io.h>
 #include <asm/psci.h>
 #include <asm/secure.h>
+#include <asm/arch/stm32.h>
 #include <hang.h>
 #include <linux/bitops.h>
 #include <linux/errno.h>

@@ -13,6 +13,7 @@
 #include <asm/io.h>
 #include <asm/arch/bsec.h>
 #include <asm/arch/stm32mp1_smc.h>
+#include <asm/arch/stm32.h>
 #include <dm/device.h>
 #include <dm/device_compat.h>
 #include <linux/arm-smccc.h>

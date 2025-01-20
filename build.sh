@@ -22,14 +22,10 @@ function build_stm32mp1()
 {
     echo "build target for stm32mp157..."
 
-    make stm32mp157d_atk_defconfig ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} O=${BUILD_DIR}
+    make stm32mp157_defconfig ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} O=${BUILD_DIR}
     make DEVICE_TREE=stm32mp157d-atk all ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} O=${BUILD_DIR} -j${nproc}
     ${CROSS_COMPILE}objdump -xdts ${BUILD_DIR}/u-boot -xdts > ${BUILD_DIR}/u-boot.dis
-}
-
-function install_target()
-{
-    cp ${BUILD_DIR}/u-boot.stm32 ${INSTALL_DIR}
+    # cp ${BUILD_DIR}/u-boot.stm32 ${INSTALL_DIR}
 }
 
 
@@ -50,7 +46,6 @@ if [[ "${CMD}" == "build" ]]; then
         build_stm32mp1
         if [[ $? == 0 ]]; then
             echo "Build success!"
-            install_target
         else
             echo "Build failed!"
             exit 1
