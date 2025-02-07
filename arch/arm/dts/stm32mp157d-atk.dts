@@ -35,6 +35,9 @@
 		};
 	};
 
+	binman: binman {
+	};
+
 	panel_backlight: panel-backlight {
 		compatible = "gpio-backlight";
 		gpios = <&gpiod 13 GPIO_ACTIVE_HIGH>;

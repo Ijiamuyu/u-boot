@@ -23,6 +23,7 @@
 			operating-points-v2 = <&cpu0_opp_table>;
 			nvmem-cells = <&part_number_otp>;
 			nvmem-cell-names = "part_number";
+			#cooling-cells = <2>;
 		};
 	};
 
@@ -139,6 +140,14 @@
 		#size-cells = <1>;
 		interrupt-parent = <&intc>;
 		ranges;
+
+		sram: sram@10000000 {
+			compatible = "mmio-sram";
+			reg = <0x10000000 0x60000>;
+			#address-cells = <1>;
+			#size-cells = <1>;
+			ranges = <0 0x10000000 0x60000>;
+		};
 
 		timers2: timer@40000000 {
 			#address-cells = <1>;
@@ -1839,6 +1848,15 @@
 				st,bank-ioport = <11>;
 				status = "disabled";
 			};
+		};
+	};
+
+	firmware {
+
+		optee: optee {
+			compatible = "linaro,optee-tz";
+			method = "smc";
+			status = "disabled";
 		};
 	};
 
