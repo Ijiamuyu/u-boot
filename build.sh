@@ -2,6 +2,7 @@
 
 CMD=$1
 TARGET=$2
+MODE=$3
 
 ARCH=arm
 CROSS_COMPILE=arm-none-linux-gnueabihf-
@@ -10,7 +11,7 @@ INSTALL_DIR=/home/jiamuyu/workspace/images
 
 function show_help()
 {
-    echo "./build.sh cmd(build | clean) target(stm32mp1 | ...)"
+    echo "./build.sh cmd(build | clean) target(stm32mp1 | ...) mode(debug | release...)"
 }
 
 function clean()
@@ -20,9 +21,15 @@ function clean()
 
 function build_stm32mp1()
 {
-    echo "build target for stm32mp157..."
 
-    make stm32mp157_defconfig ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} O=${BUILD_DIR}
+    if [[ $MODE == "debug" ]]; then
+        echo "build target for stm32mp157 debug version..."
+        make stm32mp157_debug_defconfig ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} O=${BUILD_DIR}
+    else
+        echo "build target for stm32mp157 release version..."
+        make stm32mp157_defconfig ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} O=${BUILD_DIR}
+    fi
+
     make DEVICE_TREE=stm32mp157d-atk all ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} O=${BUILD_DIR} -j${nproc}
     ${CROSS_COMPILE}objdump -xdts ${BUILD_DIR}/u-boot -xdts > ${BUILD_DIR}/u-boot.dis
     # cp ${BUILD_DIR}/u-boot.stm32 ${INSTALL_DIR}
