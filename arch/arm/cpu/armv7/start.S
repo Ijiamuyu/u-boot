@@ -233,7 +233,8 @@ ENTRY(cpu_init_cp15)
 #else
 	orr	r0, r0, #0x00001000	@ set bit 12 (I) I-cache
 #endif
-	mcr	p15, 0, r0, c1, c0, 0
+	# workaround disable mmu
+	# mcr	p15, 0, r0, c1, c0, 0
 
 #ifdef CONFIG_ARM_ERRATA_716044
 	mrc	p15, 0, r0, c1, c0, 0	@ read system control register

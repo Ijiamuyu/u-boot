@@ -17,6 +17,7 @@ function show_help()
 function clean()
 {
     make distclean
+    rm -rf $BUILD_DIR
 }
 
 function build_stm32mp1()
@@ -32,7 +33,7 @@ function build_stm32mp1()
 
     make DEVICE_TREE=stm32mp157d-atk all ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} O=${BUILD_DIR} -j${nproc}
     ${CROSS_COMPILE}objdump -xdts ${BUILD_DIR}/u-boot -xdts > ${BUILD_DIR}/u-boot.dis
-    # cp ${BUILD_DIR}/u-boot.stm32 ${INSTALL_DIR}
+    cp ${BUILD_DIR}/u-boot.bin ${INSTALL_DIR}
 }
 
 

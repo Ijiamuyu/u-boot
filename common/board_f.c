@@ -53,6 +53,76 @@
 
 DECLARE_GLOBAL_DATA_PTR;
 
+static int debug_mw0(void)
+{
+	unsigned int var = 0x20250220;
+	*(unsigned int*)(0x10040000) = var;
+	return 0;
+}
+
+static int debug_mw1(void)
+{
+	unsigned int var = 0x20250221;
+	*(unsigned int*)(0x10040000) = var;
+	return 0;
+}
+
+static int debug_mw2(void)
+{
+	unsigned int var = 0x20250222;
+	*(unsigned int*)(0x10040000) = var;
+	return 0;
+}
+
+static int debug_mw3(void)
+{
+	unsigned int var = 0x20250223;
+	*(unsigned int*)(0x10040000) = var;
+	return 0;
+}
+
+static int debug_mw4(void)
+{
+	unsigned int var = 0x20250224;
+	*(unsigned int*)(0x10040000) = var;
+	return 0;
+}
+
+
+static int debug_mw5(void)
+{
+	unsigned int var = 0x20250225;
+	*(unsigned int*)(0x10040000) = var;
+	return 0;
+}
+
+static int debug_mw6(void)
+{
+	unsigned int var = 0x20250226;
+	*(unsigned int*)(0x10040000) = var;
+	return 0;
+}
+
+static int debug_mw7(void)
+{
+	unsigned int var = 0x20250227;
+	*(unsigned int*)(0x10040000) = var;
+	return 0;
+}
+
+static int debug_mw8(void)
+{
+	unsigned int var = 0x20250228;
+	*(unsigned int*)(0x10040000) = var;
+	return 0;
+}
+
+static int debug_mw9(void)
+{
+	unsigned int var = 0x20250229;
+	*(unsigned int*)(0x10040000) = var;
+	return 0;
+}
 /*
  * TODO(sjg@chromium.org): IMO this code should be
  * refactored to a single function, something like:
@@ -912,20 +982,28 @@ static const init_fnc_t init_sequence_f[] = {
 #endif
 	env_init,		/* initialize environment */
 	init_baud_rate,		/* initialze baudrate settings */
+	debug_mw0,
 	serial_init,		/* serial communications setup */
+	debug_mw1,
 	console_init_f,		/* stage 1 init of console */
+	debug_mw2,
 	display_options,	/* say that we are here */
+	debug_mw3,
 	display_text_info,	/* show debugging info if required */
+	debug_mw4,
 	checkcpu,
 #if defined(CONFIG_SYSRESET)
 	print_resetinfo,
 #endif
+	debug_mw5,
 #if defined(CONFIG_DISPLAY_CPUINFO)
 	print_cpuinfo,		/* display cpu info (and speed) */
 #endif
+	debug_mw6,
 #if defined(CONFIG_DTB_RESELECT)
 	embedded_dtb_select,
 #endif
+	debug_mw7,
 #if defined(CONFIG_DISPLAY_BOARDINFO)
 	show_board_info,
 #endif

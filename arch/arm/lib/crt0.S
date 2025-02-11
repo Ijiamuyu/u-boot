@@ -65,6 +65,22 @@
  * can afford it due to sufficient memory being available early.
  */
 
+#define DEBUG_UART_BASE (0x40010000 + 0x28)
+#define DEBUG_LOG_BASE (0x10040000)
+
+.macro debug_putc, charc
+	ldr r11, =\charc
+	ldr r12, =DEBUG_UART_BASE
+	strb r11, [r12]
+.endm
+
+.macro debug_mw, word
+	ldr r11, =\word
+	ldr r12, =DEBUG_LOG_BASE
+	str r11, [r12]
+.endm
+
+
 .macro CLEAR_BSS
 	ldr	r0, =__bss_start	/* this is auto-relocated! */
 
@@ -91,6 +107,7 @@ clbss_l:cmp	r0, r1			/* while not at end of BSS */
 
 ENTRY(_main)
 
+	debug_mw 0x20250211
 /* Call arch_very_early_init before initializing C runtime environment. */
 #if CONFIG_IS_ENABLED(ARCH_VERY_EARLY_INIT)
 	bl	arch_very_early_init
@@ -100,6 +117,7 @@ ENTRY(_main)
  * Set up initial C runtime environment and call board_init_f(0).
  */
 
+	debug_mw 0x20250212
 #if defined(CONFIG_TPL_BUILD) && defined(CONFIG_TPL_NEEDS_SEPARATE_STACK)
 	ldr	r0, =(CONFIG_TPL_STACK)
 #elif defined(CONFIG_XPL_BUILD) && defined(CONFIG_SPL_STACK)
@@ -107,6 +125,7 @@ ENTRY(_main)
 #else
 	ldr	r0, =(SYS_INIT_SP_ADDR)
 #endif
+	debug_mw 0x20250213
 	bic	r0, r0, #7	/* 8-byte alignment for ABI compliance */
 	mov	sp, r0
 	bl	board_init_f_alloc_reserve
@@ -115,17 +134,21 @@ ENTRY(_main)
 	mov	r9, r0
 	bl	board_init_f_init_reserve
 
+	debug_mw 0x20250214
 #if defined(CONFIG_DEBUG_UART) && CONFIG_IS_ENABLED(SERIAL)
 	bl	debug_uart_init
 #endif
 
+	debug_mw 0x20250215
 #if defined(CONFIG_XPL_BUILD) && defined(CONFIG_SPL_EARLY_BSS)
 	CLEAR_BSS
 #endif
 
+	debug_mw 0x20250216
 	mov	r0, #0
 	bl	board_init_f
 
+	debug_mw 0x20250217
 #if ! defined(CONFIG_XPL_BUILD)
 
 /*
