@@ -341,3 +341,27 @@
 	vdda-supply = <&vdd>;
 	status = "okay";
 };
+
+&rcc {
+ u-boot,dm-pre-reloc;
+};
+
+&clk_hse {
+	u-boot,dm-pre-reloc;
+};
+
+&clk_hsi {
+	u-boot,dm-pre-reloc;
+};
+
+&clk_lse {
+	u-boot,dm-pre-reloc;
+};
+
+&clk_lsi {
+	u-boot,dm-pre-reloc;
+};
+
+&clk_csi {
+	u-boot,dm-pre-reloc;
+};
