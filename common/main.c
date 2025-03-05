@@ -68,7 +68,7 @@ void main_loop(void)
 	if (cli_process_fdt(&s))
 		cli_secure_boot_cmd(s);
 
-	autoboot_command(s);
+	//autoboot_command(s);
 
 	/* if standard boot if enabled, assume that it will be able to boot */
 	if (IS_ENABLED(CONFIG_BOOTSTD_PROG)) {

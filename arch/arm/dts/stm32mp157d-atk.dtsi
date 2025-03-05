@@ -343,25 +343,25 @@
 };
 
 &rcc {
- u-boot,dm-pre-reloc;
+	bootph-some-ram;
 };
 
 &clk_hse {
-	u-boot,dm-pre-reloc;
+	bootph-some-ram;
 };
 
 &clk_hsi {
-	u-boot,dm-pre-reloc;
+	bootph-some-ram;
 };
 
 &clk_lse {
-	u-boot,dm-pre-reloc;
+	bootph-some-ram;
 };
 
 &clk_lsi {
-	u-boot,dm-pre-reloc;
+	bootph-some-ram;
 };
 
 &clk_csi {
-	u-boot,dm-pre-reloc;
+	bootph-some-ram;
 };
